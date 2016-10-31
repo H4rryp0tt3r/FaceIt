@@ -4,11 +4,11 @@ class FaceView: UIView {
 
     let scale: CGFloat = 0.90
 
-    var faceRadius: CGFloat {
+    private var faceRadius: CGFloat {
         return min(bounds.size.width, bounds.size.height) / 2 * scale
     }
 
-    var faceCenter: CGPoint {
+    private var faceCenter: CGPoint {
         return CGPoint(x: bounds.midX, y: bounds.midY)
     }
 
