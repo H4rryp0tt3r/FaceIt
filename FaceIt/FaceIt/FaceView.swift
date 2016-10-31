@@ -3,7 +3,17 @@ import UIKit
 @IBDesignable
 class FaceView: UIView {
 
-    let scale: CGFloat = 0.90
+    @IBInspectable
+    var scale: CGFloat = 0.90
+
+    @IBInspectable
+    var mouthCurvature: CGFloat = 1.0
+
+    @IBInspectable
+    var color: UIColor = UIColor.blue
+
+    @IBInspectable
+    var lineWidth: CGFloat = 3.0
 
     private var faceRadius: CGFloat {
         return min(bounds.size.width, bounds.size.height) / 2 * scale
@@ -52,8 +62,6 @@ class FaceView: UIView {
 
         let mouthRect = CGRect(x: faceCenter.x - mouthWidth / 2, y: faceCenter.y + mouthOffSet, width: mouthWidth, height: mouthHeight)
 
-        let mouthCurvature: Double = 1.0
-
         let smileOffset = CGFloat(max(-1, min(mouthCurvature, 1))) * mouthRect.height
         let start = CGPoint(x: mouthRect.minX, y: mouthRect.minY)
         let end = CGPoint(x: mouthRect.maxX, y: mouthRect.minY)
@@ -63,19 +71,19 @@ class FaceView: UIView {
         let path = UIBezierPath()
         path.move(to: start)
         path.addCurve(to: end, controlPoint1: cp1, controlPoint2: cp2)
-        path.lineWidth = 3.0
+        path.lineWidth = lineWidth
 
         return path
     }
 
     private func pathForCircleCenteredAtPoint(midPoint: CGPoint, withRadius radius: CGFloat) -> UIBezierPath {
         let path = UIBezierPath(arcCenter: midPoint, radius: radius, startAngle: 0.0, endAngle: CGFloat(2 * M_PI), clockwise: true)
-        path.lineWidth = 3.0
+        path.lineWidth = lineWidth
         return path
     }
 
     override func draw(_ rect: CGRect) {
-        UIColor.blue.set()
+        color.set()
         pathForCircleCenteredAtPoint(midPoint: faceCenter, withRadius: faceRadius).stroke()
         pathForEye(eye: .Left).stroke()
         pathForEye(eye: .Right).stroke()
