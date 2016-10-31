@@ -1,5 +1,6 @@
 import UIKit
 
+@IBDesignable
 class FaceView: UIView {
 
     let scale: CGFloat = 0.90
